@@ -1,0 +1,76 @@
+<mat-stepper orientation="vertical" #stepper>
+  <mat-step label="Sélectionnez les paramètres d'abonnement">
+    <form class="example-form" [formGroup]="subscriptionForm">
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Durée (en mois)</mat-label>
+        <mat-select formControlName="duration">
+          <mat-option *ngFor="let duration of durations" [value]="duration">
+            {{ duration }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="example-full-width">
+        <mat-label>Quantité de gigaoctets dans un cloud</mat-label>
+        <mat-select formControlName="storage">
+          <mat-option
+            *ngFor="let storageOption of storageOptions"
+            [value]="storageOption"
+          >
+            {{ storageOption }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <mat-checkbox formControlName="initialPayment"
+          >Paiement initial</mat-checkbox
+        >
+      </div>
+    </form>
+    <button (click)="nextStipper()" mat-raised-button color="primary">
+      Continuer
+    </button>
+  </mat-step>
+  <mat-step label="Données de paiement">
+    <form [formGroup]="paymentForm" class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Numéro de Carte de Crédit</mat-label>
+        <input matInput formControlName="creditCardNumber" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Date d'expiration de la carte de crédit</mat-label>
+        <input matInput formControlName="expirationDate" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Code de sécurité de la carte de crédit</mat-label>
+        <input matInput formControlName="securityCode" />
+      </mat-form-field>
+    </form>
+    <button mat-button matStepperPrevious>Précédent</button>
+    <button mat-button (click)="nextStipper()">Continuer</button>
+  </mat-step>
+  <mat-step label="Validation">
+    <div>
+      <p>Récapitulatif de l'abonnement sélectionné :</p>
+      <p>Durée : {{ subscriptionForm.value.duration }}</p>
+      <p>
+        Quantité de gigaoctets dans un cloud :
+        {{ subscriptionForm.value.storage }}
+      </p>
+
+      <p>Prix total : {{ selectedSubscription.totalPrice }} USD</p>
+      <p>Prix par Go : {{ selectedSubscription.pricePerGb }} USD</p>
+
+      <form [formGroup]="validationForm" class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>E-mail de l'utilisateur</mat-label>
+          <input matInput formControlName="email" />
+        </mat-form-field>
+        <mat-checkbox formControlName="agreement"
+          >Accord sur les termes et conditions</mat-checkbox
+        >
+      </form>
+    </div>
+    <button mat-button matStepperPrevious>Précédent</button>
+    <button mat-button (click)="confirmSubscription()">Confirmer</button>
+  </mat-step>
+</mat-stepper>
