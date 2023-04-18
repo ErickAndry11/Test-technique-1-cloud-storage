@@ -6,6 +6,7 @@ import {
   storageOptionsList,
 } from 'src/app/constants/durationsAndstorageOptionsList';
 import { subscriptionPlansList } from 'src/app/constants/subscriptionPlansTypeList';
+import { Subscription } from 'src/app/modeles/subscription';
 
 @Component({
   selector: 'app-subscription',
@@ -34,7 +35,7 @@ export class SubscriptionComponent {
     this.subscriptionForm = this.fb.group({
       duration: [12, Validators.required],
       storage: [5, Validators.required],
-      initialPayment: [false, Validators.required],
+      initialPayment: [false],
     });
 
     this.paymentForm = this.fb.group({
@@ -74,5 +75,17 @@ export class SubscriptionComponent {
     this.stepper.next();
   }
 
-  confirmSubscription(): void {}
+  confirmSubscription(): void {
+    const valuesSubscription: Subscription = {
+      duration: parseInt(this.subscriptionForm.get('duration')?.value),
+      storage: parseInt(this.subscriptionForm.get('storage')?.value),
+      initialPayment: this.subscriptionForm.get('initialPayment')?.value,
+
+      creditCardNumber: this.paymentForm.get('creditCardNumber')?.value,
+      expirationDate: this.subscriptionForm.get('expirationDate')?.value,
+      securityCode: this.subscriptionForm.get('securityCode')?.value,
+      email: this.validationForm.get('email')?.value,
+    };
+    console.log('valuesSubscription', valuesSubscription);
+  }
 }
