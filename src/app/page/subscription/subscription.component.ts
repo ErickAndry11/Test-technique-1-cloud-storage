@@ -1,5 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import {
   durationsList,
@@ -22,6 +27,8 @@ export class SubscriptionComponent {
   subscriptionForm: FormGroup;
   paymentForm: FormGroup;
   validationForm: FormGroup;
+
+  submitted = false;
 
   totalPrice: number = 0;
   pricePerGb: number = 0;
@@ -50,6 +57,14 @@ export class SubscriptionComponent {
     });
 
     this.updatePrice();
+  }
+
+  get f1(): { [key: string]: AbstractControl } {
+    return this.paymentForm.controls;
+  }
+
+  get f2(): { [key: string]: AbstractControl } {
+    return this.validationForm.controls;
   }
 
   updatePrice(): void {

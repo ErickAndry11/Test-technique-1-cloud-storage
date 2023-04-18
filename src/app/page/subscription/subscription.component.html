@@ -34,16 +34,58 @@
     <form [formGroup]="paymentForm" class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>Numéro de Carte de Crédit</mat-label>
-        <input matInput formControlName="creditCardNumber" />
+        <input
+          matInput
+          formControlName="creditCardNumber"
+          [ngClass]="{
+            'is-invalid': submitted && f1['creditCardNumber'].errors
+          }"
+        />
       </mat-form-field>
+      <div
+        *ngIf="submitted && f1['creditCardNumber'].errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f1['creditCardNumber']['errors']['required']">
+          Veuillez remplir ce numéro de Carte de Crédit
+        </div>
+      </div>
       <mat-form-field class="example-full-width">
         <mat-label>Date d'expiration de la carte de crédit</mat-label>
-        <input matInput formControlName="expirationDate" />
+        <input
+          matInput
+          formControlName="expirationDate"
+          [ngClass]="{
+            'is-invalid': submitted && f1['expirationDate'].errors
+          }"
+        />
       </mat-form-field>
+      <div
+        *ngIf="submitted && f1['expirationDate'].errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f1['expirationDate']['errors']['required']">
+          Veuillez remplir la date d'expiration de la carte de crédit
+        </div>
+      </div>
       <mat-form-field class="example-full-width">
         <mat-label>Code de sécurité de la carte de crédit</mat-label>
-        <input matInput formControlName="securityCode" />
+        <input
+          matInput
+          formControlName="securityCode"
+          [ngClass]="{
+            'is-invalid': submitted && f1['securityCode'].errors
+          }"
+        />
       </mat-form-field>
+      <div
+        *ngIf="submitted && f1['securityCode'].errors"
+        class="invalid-feedback"
+      >
+        <div *ngIf="f1['securityCode']['errors']['required']">
+          Veuillez remplir le code de sécurité de la carte de crédit
+        </div>
+      </div>
     </form>
     <button mat-button matStepperPrevious>Précédent</button>
     <button mat-button (click)="nextStipper()">Continuer</button>
@@ -63,11 +105,33 @@
       <form [formGroup]="validationForm" class="example-form">
         <mat-form-field class="example-full-width">
           <mat-label>E-mail de l'utilisateur</mat-label>
-          <input matInput formControlName="email" />
+          <input
+            matInput
+            formControlName="email"
+            [ngClass]="{ 'is-invalid': submitted && f2['email'].errors }"
+          />
         </mat-form-field>
-        <mat-checkbox formControlName="agreement"
+        <div
+          *ngIf="submitted && f2['email']['errors']"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f2['email']['errors']['required']">
+            Veuillez remplir ce champ
+          </div>
+          <div *ngIf="f2['email']['errors']['email']">Email invalide</div>
+        </div>
+
+        <mat-checkbox formControlName="agreement" required
           >Accord sur les termes et conditions</mat-checkbox
         >
+        <div
+          *ngIf="submitted && f2['agreement']['errors']"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f2['agreement']['errors']['required']">
+            La case à cocher est obligatoire.
+          </div>
+        </div>
       </form>
     </div>
     <button mat-button matStepperPrevious>Précédent</button>
