@@ -77,11 +77,13 @@ export class SubscriptionComponent {
     const duration = parseInt(this.subscriptionForm.get('duration')?.value);
     const amount = parseInt(this.subscriptionForm.get('storage')?.value);
     const initialPayment = this.subscriptionForm.get('initialPayment')?.value;
+
     const pricePerGb = subscriptionPlansList.find(
       (plan) => plan.durationMonths === duration
     )?.priceUsdPerGb;
 
     let totalPrice = duration * amount * Number(pricePerGb);
+
     if (initialPayment) {
       totalPrice *= 0.9;
     }
@@ -92,13 +94,13 @@ export class SubscriptionComponent {
   }
 
   nextStipper(nbStep: number) {
-    this.updatePrice();
     switch (nbStep) {
       case 1:
         this.submittedStipe1 = true;
         if (this.paymentForm.invalid) {
           return;
         }
+        this.stepper.next();
         break;
       case 2:
         this.submittedStipe2 = true;
@@ -108,25 +110,30 @@ export class SubscriptionComponent {
         this.confirmSubscription();
         break;
     }
-
-    this.stepper.next();
   }
 
   confirmSubscription(): void {
+    if (this.paymentForm.invalid) {
+      this.submittedStipe1 = true;
+      this.stepper.previous();
+      return;
+    }
     const valuesSubscription: Subscription = {
       duration: parseInt(this.subscriptionForm.get('duration')?.value),
       storage: parseInt(this.subscriptionForm.get('storage')?.value),
       initialPayment: this.subscriptionForm.get('initialPayment')?.value,
 
       creditCardNumber: this.paymentForm.get('creditCardNumber')?.value,
-      expirationDate: this.subscriptionForm.get('expirationDate')?.value,
-      securityCode: this.subscriptionForm.get('securityCode')?.value,
+      expirationDate: this.paymentForm.get('expirationDate')?.value,
+      securityCode: this.paymentForm.get('securityCode')?.value,
       email: this.validationForm.get('email')?.value,
     };
     console.log('valuesSubscription', valuesSubscription);
   }
 
-  checkFormInNavigation(): boolean {
-    return this.paymentForm.invalid ? true : false;
+  onStepChange(event: any) {
+    if (event) {
+      this.updatePrice();
+    }
   }
 }
