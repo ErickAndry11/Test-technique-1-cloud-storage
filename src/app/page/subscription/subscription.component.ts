@@ -28,6 +28,8 @@ export class SubscriptionComponent {
   paymentForm: FormGroup;
   validationForm: FormGroup;
 
+  editable: boolean = true;
+
   submitted = false;
 
   submittedStipe1 = false;
@@ -122,5 +124,9 @@ export class SubscriptionComponent {
       email: this.validationForm.get('email')?.value,
     };
     console.log('valuesSubscription', valuesSubscription);
+  }
+
+  checkFormInNavigation(): boolean {
+    return this.paymentForm.invalid ? true : false;
   }
 }
