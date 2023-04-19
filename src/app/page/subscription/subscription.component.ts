@@ -114,7 +114,6 @@ export class SubscriptionComponent {
 
   confirmSubscription(): void {
     if (this.paymentForm.invalid) {
-      this.submittedStipe1 = true;
       this.stepper.previous();
       return;
     }

@@ -6,10 +6,10 @@
     (selectionChange)="onStepChange($event)"
   >
     <!-- start step 0 -->
-    <mat-step label="Sélectionnez les paramètres d'abonnement">
+    <mat-step label="Select subscription parameters">
       <form class="example-form" [formGroup]="subscriptionForm">
         <mat-form-field appearance="outline" class="example-full-width">
-          <mat-label>Durée (en mois)</mat-label>
+          <mat-label>Duration (in months)</mat-label>
           <mat-select formControlName="duration">
             <mat-option *ngFor="let duration of durations" [value]="duration">
               {{ duration }}
@@ -17,7 +17,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" class="example-full-width">
-          <mat-label>Quantité de gigaoctets dans un cloud</mat-label>
+          <mat-label>Amount of gigabytes in a cloud</mat-label>
           <mat-select formControlName="storage">
             <mat-option
               *ngFor="let storageOption of storageOptions"
@@ -29,7 +29,7 @@
         </mat-form-field>
         <div>
           <mat-checkbox color="primary" formControlName="initialPayment"
-            >Paiement initial</mat-checkbox
+            >Upfront payment</mat-checkbox
           >
         </div>
         <div class="btn-footer">
@@ -39,7 +39,7 @@
             mat-raised-button
             color="primary"
           >
-            Continuer
+            Next
           </button>
         </div>
       </form>
@@ -47,20 +47,20 @@
     <!-- end start step 0 -->
     <!-- start start step 1 -->
 
-    <mat-step label="Données de paiement">
+    <mat-step label="Payment data">
       <div>
-        <p>Récapitulatif de l'abonnement sélectionné :</p>
-        <p>Durée : {{ subscriptionForm.value.duration }}</p>
+        <p>Summary of the selected subscription:</p>
+        <p>Duration : {{ subscriptionForm.value.duration }}</p>
         <p>
-          Quantité de gigaoctets dans un cloud :
+          Amount of gigabytes in a cloud :
           {{ subscriptionForm.value.storage }}
         </p>
 
-        <p>Prix total : {{ selectedSubscription.totalPrice }} USD</p>
+        <p>Total price : {{ selectedSubscription.totalPrice }} USD</p>
 
         <form [formGroup]="paymentForm" class="example-form">
           <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Numéro de Carte de Crédit</mat-label>
+            <mat-label>Credit Card number</mat-label>
             <input
               matInput
               formControlName="creditCardNumber"
@@ -73,12 +73,12 @@
               class="invalid-feedback"
             >
               <span *ngIf="f1['creditCardNumber']['errors']['required']">
-                Veuillez remplir ce numéro de Carte de Crédit</span
+                Please enter a valid Credit Card number</span
               >
             </mat-error>
           </mat-form-field>
           <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Date d'expiration de la carte de crédit</mat-label>
+            <mat-label>Credit card expiration date</mat-label>
             <input
               matInput
               formControlName="expirationDate"
@@ -92,14 +92,13 @@
               class="invalid-feedback"
             >
               <span *ngIf="f1['expirationDate']['errors']['required']">
-                Veuillez remplir la date d'expiration de la carte de
-                crédit</span
+                Please enter a valid Credit card expiration date</span
               >
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Code de sécurité de la carte de crédit</mat-label>
+            <mat-label>Credit card security code</mat-label>
             <input
               matInput
               formControlName="securityCode"
@@ -112,19 +111,19 @@
               class="invalid-feedback"
             >
               <span *ngIf="f1['securityCode']['errors']['required']">
-                Veuillez remplir le code de sécurité de la carte de crédit</span
+                Please enter a valid Credit card security code</span
               >
             </mat-error>
           </mat-form-field>
           <div class="btn-footer">
-            <button mat-button matStepperPrevious>Précédent</button>
+            <button mat-button matStepperPrevious>Previous</button>
             <button
               mat-raised-button
               color="primary"
               type="submit"
               (click)="nextStipper(1)"
             >
-              Continuer
+              Next
             </button>
           </div>
         </form>
@@ -133,21 +132,21 @@
     <!-- end start step 1 -->
     <!-- start start step 2 -->
 
-    <mat-step label="Validation" [completed]="true">
+    <mat-step label="Confirmation" [completed]="true">
       <div>
-        <p>Récapitulatif de l'abonnement sélectionné :</p>
-        <p>Durée : {{ subscriptionForm.value.duration }}</p>
+        <p>Summary of the selected subscription:</p>
+        <p>Duration : {{ subscriptionForm.value.duration }}</p>
         <p>
-          Quantité de gigaoctets dans un cloud :
+          Amount of gigabytes in a cloud :
           {{ subscriptionForm.value.storage }}
         </p>
 
-        <p>Prix total : {{ selectedSubscription.totalPrice }} USD</p>
-        <p>Prix par Go : {{ selectedSubscription.pricePerGb }} USD</p>
+        <p>Total price : {{ selectedSubscription.totalPrice }} USD</p>
+        <p>Price per GB: {{ selectedSubscription.pricePerGb }} USD</p>
 
         <form [formGroup]="validationForm" class="example-form">
           <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>E-mail de l'utilisateur</mat-label>
+            <mat-label>Email</mat-label>
             <input
               matInput
               formControlName="email"
@@ -161,33 +160,33 @@
               class="invalid-feedback"
             >
               <span *ngIf="f2['email']['errors']['required']">
-                Veuillez remplir ce champ</span
+                Please enter a valid Email</span
               >
               <span *ngIf="f2['email']['errors']['email']">Email invalide</span>
             </mat-error>
           </mat-form-field>
 
           <mat-checkbox color="primary" formControlName="agreement" required
-            >Accord sur les termes et conditions</mat-checkbox
+            >Agreement to the terms and conditions</mat-checkbox
           >
           <mat-error
             *ngIf="submittedStipe2 && f2['agreement']['errors']"
             class="invalid-feedback"
           >
             <span *ngIf="f2['agreement']['errors']['required']">
-              La case à cocher est obligatoire.</span
+              Please Agreement to the terms and conditions.</span
             >
           </mat-error>
 
           <div class="btn-footer">
-            <button mat-button matStepperPrevious>Précédent</button>
+            <button mat-button matStepperPrevious>Previous</button>
             <button
               mat-raised-button
               color="primary"
               type="submit"
               (click)="nextStipper(2)"
             >
-              Confirmer
+              Confirm
             </button>
           </div>
         </form>
