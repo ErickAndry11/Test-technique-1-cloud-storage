@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [AppComponent, SubscriptionComponent],
@@ -31,6 +32,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     FormsModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

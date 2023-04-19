@@ -30,6 +30,10 @@ export class SubscriptionComponent {
 
   submitted = false;
 
+  submittedStipe1 = false;
+
+  submittedStipe2 = false;
+
   totalPrice: number = 0;
   pricePerGb: number = 0;
 
@@ -85,8 +89,24 @@ export class SubscriptionComponent {
     };
   }
 
-  nextStipper() {
+  nextStipper(nbStep: number) {
     this.updatePrice();
+    switch (nbStep) {
+      case 1:
+        this.submittedStipe1 = true;
+        if (this.paymentForm.invalid) {
+          return;
+        }
+        break;
+      case 2:
+        this.submittedStipe2 = true;
+        if (this.validationForm.invalid) {
+          return;
+        }
+        this.confirmSubscription();
+        break;
+    }
+
     this.stepper.next();
   }
 

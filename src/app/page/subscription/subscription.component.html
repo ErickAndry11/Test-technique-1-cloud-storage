@@ -1,140 +1,153 @@
-<mat-stepper orientation="vertical" #stepper>
-  <mat-step label="Sélectionnez les paramètres d'abonnement">
-    <form class="example-form" [formGroup]="subscriptionForm">
-      <mat-form-field appearance="fill" class="example-full-width">
-        <mat-label>Durée (en mois)</mat-label>
-        <mat-select formControlName="duration">
-          <mat-option *ngFor="let duration of durations" [value]="duration">
-            {{ duration }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="example-full-width">
-        <mat-label>Quantité de gigaoctets dans un cloud</mat-label>
-        <mat-select formControlName="storage">
-          <mat-option
-            *ngFor="let storageOption of storageOptions"
-            [value]="storageOption"
+<div class="mat-container">
+  <mat-stepper orientation="vertical" #stepper [linear]="false">
+    <mat-step label="Sélectionnez les paramètres d'abonnement">
+      <form class="example-form" [formGroup]="subscriptionForm">
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Durée (en mois)</mat-label>
+          <mat-select formControlName="duration">
+            <mat-option *ngFor="let duration of durations" [value]="duration">
+              {{ duration }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Quantité de gigaoctets dans un cloud</mat-label>
+          <mat-select formControlName="storage">
+            <mat-option
+              *ngFor="let storageOption of storageOptions"
+              [value]="storageOption"
+            >
+              {{ storageOption }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <mat-checkbox formControlName="initialPayment"
+            >Paiement initial</mat-checkbox
           >
-            {{ storageOption }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div>
-        <mat-checkbox formControlName="initialPayment"
-          >Paiement initial</mat-checkbox
-        >
-      </div>
-    </form>
-    <button (click)="nextStipper()" mat-raised-button color="primary">
-      Continuer
-    </button>
-  </mat-step>
-  <mat-step label="Données de paiement">
-    <form [formGroup]="paymentForm" class="example-form">
-      <mat-form-field class="example-full-width">
-        <mat-label>Numéro de Carte de Crédit</mat-label>
-        <input
-          matInput
-          formControlName="creditCardNumber"
-          [ngClass]="{
-            'is-invalid': submitted && f1['creditCardNumber'].errors
-          }"
-        />
-      </mat-form-field>
-      <div
-        *ngIf="submitted && f1['creditCardNumber'].errors"
-        class="invalid-feedback"
-      >
-        <div *ngIf="f1['creditCardNumber']['errors']['required']">
-          Veuillez remplir ce numéro de Carte de Crédit
         </div>
-      </div>
-      <mat-form-field class="example-full-width">
-        <mat-label>Date d'expiration de la carte de crédit</mat-label>
-        <input
-          matInput
-          formControlName="expirationDate"
-          [ngClass]="{
-            'is-invalid': submitted && f1['expirationDate'].errors
-          }"
-        />
-      </mat-form-field>
-      <div
-        *ngIf="submitted && f1['expirationDate'].errors"
-        class="invalid-feedback"
+      </form>
+      <button
+        (click)="nextStipper(0)"
+        class="mat-align-end"
+        mat-raised-button
+        color="primary"
       >
-        <div *ngIf="f1['expirationDate']['errors']['required']">
-          Veuillez remplir la date d'expiration de la carte de crédit
-        </div>
-      </div>
-      <mat-form-field class="example-full-width">
-        <mat-label>Code de sécurité de la carte de crédit</mat-label>
-        <input
-          matInput
-          formControlName="securityCode"
-          [ngClass]="{
-            'is-invalid': submitted && f1['securityCode'].errors
-          }"
-        />
-      </mat-form-field>
-      <div
-        *ngIf="submitted && f1['securityCode'].errors"
-        class="invalid-feedback"
-      >
-        <div *ngIf="f1['securityCode']['errors']['required']">
-          Veuillez remplir le code de sécurité de la carte de crédit
-        </div>
-      </div>
-    </form>
-    <button mat-button matStepperPrevious>Précédent</button>
-    <button mat-button (click)="nextStipper()">Continuer</button>
-  </mat-step>
-  <mat-step label="Validation">
-    <div>
-      <p>Récapitulatif de l'abonnement sélectionné :</p>
-      <p>Durée : {{ subscriptionForm.value.duration }}</p>
-      <p>
-        Quantité de gigaoctets dans un cloud :
-        {{ subscriptionForm.value.storage }}
-      </p>
-
-      <p>Prix total : {{ selectedSubscription.totalPrice }} USD</p>
-      <p>Prix par Go : {{ selectedSubscription.pricePerGb }} USD</p>
-
-      <form [formGroup]="validationForm" class="example-form">
+        Continuer
+      </button>
+    </mat-step>
+    <mat-step label="Données de paiement">
+      <form [formGroup]="paymentForm" class="example-form">
         <mat-form-field class="example-full-width">
-          <mat-label>E-mail de l'utilisateur</mat-label>
+          <mat-label>Numéro de Carte de Crédit</mat-label>
           <input
             matInput
-            formControlName="email"
-            [ngClass]="{ 'is-invalid': submitted && f2['email'].errors }"
+            formControlName="creditCardNumber"
+            [ngClass]="{
+              'is-invalid': submitted && f1['creditCardNumber'].errors
+            }"
           />
         </mat-form-field>
         <div
-          *ngIf="submitted && f2['email']['errors']"
+          *ngIf="submittedStipe1 && f1['creditCardNumber'].errors"
           class="invalid-feedback"
         >
-          <div *ngIf="f2['email']['errors']['required']">
-            Veuillez remplir ce champ
+          <div *ngIf="f1['creditCardNumber']['errors']['required']">
+            Veuillez remplir ce numéro de Carte de Crédit
           </div>
-          <div *ngIf="f2['email']['errors']['email']">Email invalide</div>
         </div>
-
-        <mat-checkbox formControlName="agreement" required
-          >Accord sur les termes et conditions</mat-checkbox
-        >
+        <mat-form-field class="example-full-width">
+          <mat-label>Date d'expiration de la carte de crédit</mat-label>
+          <input
+            matInput
+            formControlName="expirationDate"
+            [ngClass]="{
+              'is-invalid': submittedStipe1 && f1['expirationDate'].errors
+            }"
+          />
+        </mat-form-field>
         <div
-          *ngIf="submitted && f2['agreement']['errors']"
+          *ngIf="submittedStipe1 && f1['expirationDate'].errors"
           class="invalid-feedback"
         >
-          <div *ngIf="f2['agreement']['errors']['required']">
-            La case à cocher est obligatoire.
+          <div *ngIf="f1['expirationDate']['errors']['required']">
+            Veuillez remplir la date d'expiration de la carte de crédit
+          </div>
+        </div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Code de sécurité de la carte de crédit</mat-label>
+          <input
+            matInput
+            formControlName="securityCode"
+            [ngClass]="{
+              'is-invalid': submittedStipe1 && f1['securityCode'].errors
+            }"
+          />
+        </mat-form-field>
+        <div
+          *ngIf="submittedStipe1 && f1['securityCode'].errors"
+          class="invalid-feedback"
+        >
+          <div *ngIf="f1['securityCode']['errors']['required']">
+            Veuillez remplir le code de sécurité de la carte de crédit
           </div>
         </div>
       </form>
-    </div>
-    <button mat-button matStepperPrevious>Précédent</button>
-    <button mat-button (click)="confirmSubscription()">Confirmer</button>
-  </mat-step>
-</mat-stepper>
+      <button mat-button matStepperPrevious>Précédent</button>
+      <button mat-raised-button color="primary" (click)="nextStipper(1)">
+        Continuer
+      </button>
+    </mat-step>
+    <mat-step label="Validation">
+      <div>
+        <p>Récapitulatif de l'abonnement sélectionné :</p>
+        <p>Durée : {{ subscriptionForm.value.duration }}</p>
+        <p>
+          Quantité de gigaoctets dans un cloud :
+          {{ subscriptionForm.value.storage }}
+        </p>
+
+        <p>Prix total : {{ selectedSubscription.totalPrice }} USD</p>
+        <p>Prix par Go : {{ selectedSubscription.pricePerGb }} USD</p>
+
+        <form [formGroup]="validationForm" class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>E-mail de l'utilisateur</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': submittedStipe2 && f2['email'].errors
+              }"
+            />
+          </mat-form-field>
+          <div
+            *ngIf="submittedStipe2 && f2['email']['errors']"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f2['email']['errors']['required']">
+              Veuillez remplir ce champ
+            </div>
+            <div *ngIf="f2['email']['errors']['email']">Email invalide</div>
+          </div>
+
+          <mat-checkbox formControlName="agreement" required
+            >Accord sur les termes et conditions</mat-checkbox
+          >
+          <div
+            *ngIf="submittedStipe2 && f2['agreement']['errors']"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f2['agreement']['errors']['required']">
+              La case à cocher est obligatoire.
+            </div>
+          </div>
+        </form>
+      </div>
+      <button mat-button matStepperPrevious>Précédent</button>
+      <button mat-raised-button color="primary" (click)="nextStipper(2)">
+        Confirmer
+      </button>
+    </mat-step>
+  </mat-stepper>
+</div>
